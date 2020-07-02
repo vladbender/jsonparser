@@ -3,7 +3,7 @@
 
 AbstractObject* Parser::parse() {
 	if (result != NULL) {
-		// Если функция parse уже вызывалась - возвращаем результат
+		// Р•СЃР»Рё С„СѓРЅРєС†РёСЏ parse СѓР¶Рµ РІС‹Р·С‹РІР°Р»Р°СЃСЊ - РІРѕР·РІСЂР°С‰Р°РµРј СЂРµР·СѓР»СЊС‚Р°С‚
 		return result;
 	}
 
@@ -41,7 +41,7 @@ AbstractObject* Parser::parseUnknown() {
 	}
 
 	case TokenType::NUMBER: {
-		// TODO отловить эксепшн и кинуть свой
+		// TODO РѕС‚Р»РѕРІРёС‚СЊ СЌРєСЃРµРїС€РЅ Рё РєРёРЅСѓС‚СЊ СЃРІРѕР№
 		auto d = std::stod(tokens[index].rawValue);
 		auto num = new Number(d);
 		index++;

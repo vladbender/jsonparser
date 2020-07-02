@@ -23,7 +23,7 @@ namespace JSON {
 		std::string toString();
 
 	private:
-		// Может хранить ссылки?
+		// РњРѕР¶РµС‚ С…СЂР°РЅРёС‚СЊ СЃСЃС‹Р»РєРё?
 		std::vector<AbstractObject*> values;
 	};
 }

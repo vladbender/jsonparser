@@ -1,7 +1,7 @@
 
 #include "unescapeQuotes.h"
 
-// TODO не самый эффективный алгоритм
+// TODO РЅРµ СЃР°РјС‹Р№ СЌС„С„РµРєС‚РёРІРЅС‹Р№ Р°Р»РіРѕСЂРёС‚Рј
 std::string unescapeQuotes(std::string s) {
 	std::string result = "";
 

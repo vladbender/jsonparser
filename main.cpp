@@ -1,4 +1,4 @@
-﻿#include <iostream>
+#include <iostream>
 #include "json/json.h"
 #include "Tester.h"
 
