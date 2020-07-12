@@ -2,7 +2,7 @@
 #include "unescapeQuotes.h"
 
 // TODO не самый эффективный алгоритм
-std::string unescapeQuotes(std::string s) {
+std::string unescapeQuotes(std::string& s) {
 	std::string result = "";
 
 	for (size_t i = 0; i < s.size() - 1;) {

@@ -8,7 +8,7 @@ void testCreateObject(Tester &tester) {
 	JSON::Object object;
 	JSON::Array *array = new JSON::Array();
 
-	object.set("arr", array);
+	object.set(std::string("arr"), array);
 
 	array->push(new JSON::String("this is \" a string"));
 	array->push(new JSON::Null());
@@ -34,7 +34,7 @@ void testParseObject(Tester &tester) {
 			return;
 		}
 
-		auto arr = (JSON::Array*)(*obj)["arr"];
+		auto arr = (JSON::Array*)(*obj)[std::string("arr")];
 
 		if (arr == nullptr) {
 			tester.testEqual("arr pointer", "is nullptr");

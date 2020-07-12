@@ -10,7 +10,7 @@
 
 class Tokenizer {
 public:
-	Tokenizer(std::string s): json(s) {
+	Tokenizer(std::string& s): json(s) {
 		index = 0;
 		alreadyRunned = false;
 	}

@@ -10,6 +10,10 @@ AbstractObject* Parser::parse() {
 	auto res = parseUnknown();
 
 	if (index != tokens.size()) {
+		/**
+		 * TODO возможно, стоит возвращать результат, но при этом устанавливать флаг,
+		 * что не вся строка была распарсена
+		 */
 		throw WrongLengthException("Not all characters parsed");
 	}
 
@@ -56,7 +60,7 @@ AbstractObject* Parser::parseUnknown() {
 
 	default:
 		throw JSON::ExpectedException(
-			"STRING_, NULL_, BOOLEAN, NUMBER",
+			"One of STRING, NULL_, BOOLEAN or NUMBER",
 			fromTokenTypeToString(type)
 		);
 	}
@@ -114,7 +118,6 @@ AbstractObject* Parser::parseObject() {
 	}
 
 	while (index < tokens.size()) {
-
 		excpectToken(TokenType::STRING_, tokens[index].type);
 
 		auto key = unescapeQuotes(tokens[index].rawValue);

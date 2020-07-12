@@ -9,7 +9,7 @@ namespace JSON {
 		}
 	}
 
-	void Object::set(std::string key, AbstractObject* obj) {
+	void Object::set(std::string& key, AbstractObject* obj) {
 		auto has = values.find(key);
 
 		if (has == values.end()) {
@@ -23,7 +23,7 @@ namespace JSON {
 		}
 	}
 
-	AbstractObject* Object::operator[](std::string key) {
+	AbstractObject* Object::operator[](std::string& key) {
 		auto has = values.find(key);
 
 		if (has == values.end()) {

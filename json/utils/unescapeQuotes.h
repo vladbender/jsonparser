@@ -3,4 +3,4 @@
 
 #include <string>
 
-std::string unescapeQuotes(std::string s);
+std::string unescapeQuotes(std::string& s);

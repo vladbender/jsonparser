@@ -14,9 +14,9 @@ namespace JSON {
 
 		~Object();
 
-		AbstractObject* operator[](std::string);
+		AbstractObject* operator[](std::string&);
 
-		void set(std::string key, AbstractObject* obj);
+		void set(std::string&, AbstractObject*);
 
 		std::string toString();
 
