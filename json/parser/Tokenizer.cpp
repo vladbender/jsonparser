@@ -79,7 +79,7 @@ std::vector<Token> Tokenizer::tokenize() {
 			result.push_back({ TokenType::NUMBER, raw });
 
 		} else {
-			throw JSON::ExcpectedException("One of char: []{}:,\" or true/false/null", std::string(1, json[index]));
+			throw JSON::ExpectedException("One of char: []{}:,\" or true/false/null", std::string(1, json[index]));
 		}
 	}
 

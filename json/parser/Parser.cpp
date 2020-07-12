@@ -55,7 +55,7 @@ AbstractObject* Parser::parseUnknown() {
 		return parseObject();
 
 	default:
-		throw JSON::ExcpectedException(
+		throw JSON::ExpectedException(
 			"STRING_, NULL_, BOOLEAN, NUMBER",
 			fromTokenTypeToString(type)
 		);

@@ -77,7 +77,7 @@ void testExpectedString(Tester &tester) {
 		auto obj = JSON::parse("{[}");
 
 		std::cout << obj->getType() << std::endl;
-	} catch (JSON::ExcpectedException &exp) {
+	} catch (JSON::ExpectedException &exp) {
 		message = std::string(exp.what());
 	} catch (JSON::WrongLengthException &wl) {
 		message = std::string(wl.what());

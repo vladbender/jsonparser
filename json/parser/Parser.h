@@ -34,7 +34,7 @@ private:
 
 	void excpectToken(TokenType expected, TokenType received) {
 		if (expected != received) {
-			throw ExcpectedException(
+			throw ExpectedException(
 				fromTokenTypeToString(expected),
 				fromTokenTypeToString(received)
 			);

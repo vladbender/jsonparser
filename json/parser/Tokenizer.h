@@ -30,7 +30,7 @@ private:
 
 	void expectChar(char expected, char received) {
 		if (expected != received) {
-			throw JSON::ExcpectedException(
+			throw JSON::ExpectedException(
 				std::string(1, expected),
 				std::string(1, received)
 			);
