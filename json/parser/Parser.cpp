@@ -23,7 +23,7 @@ AbstractObject* Parser::parse() {
 AbstractObject* Parser::parseUnknown() {
 	checkTokensOutOfRange();
 
-	TokenType &type = tokens[index].type;
+	auto &type = tokens[index].type;
 
 	switch (type) {
 	case TokenType::STRING: {
