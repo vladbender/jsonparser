@@ -8,7 +8,7 @@ std::string fromTokenTypeToString(TokenType type) {
 	case BRACE_RIGHT: return "{";
 	case BRACKET_LEFT: return "[";
 	case BRACKET_RIGHT: return "]";
-	case STRING_: return "STRING_";
+	case STRING: return "STRING";
 	case NULL_: return "NULL_";
 	case BOOLEAN: return "BOOLEAN";
 	case COLON: return ":";

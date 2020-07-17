@@ -26,7 +26,7 @@ AbstractObject* Parser::parseUnknown() {
 	TokenType &type = tokens[index].type;
 
 	switch (type) {
-	case TokenType::STRING_: {
+	case TokenType::STRING: {
 		auto str = new String(unescapeQuotes(tokens[index].rawValue));
 		index++;
 		return str;
@@ -68,86 +68,54 @@ AbstractObject* Parser::parseUnknown() {
 
 AbstractObject* Parser::parseArray() {
 	excpectToken(TokenType::BRACKET_LEFT, tokens[index].type);
-
 	index++;
-
 	checkTokensOutOfRange();
-	
 	auto array = new Array();
-
 	if (tokens[index].type == TokenType::BRACKET_RIGHT) {
 		index++;
 		return array;
 	}
-
 	while (index < tokens.size()) {
 		auto next = parseUnknown();
-
 		array->push(next);
-
 		checkTokensOutOfRange();
-
 		if (tokens[index].type == TokenType::BRACKET_RIGHT) {
 			break;
 		}
-
 		excpectToken(TokenType::COMMA, tokens[index].type);
-
 		index++;
 	}
-
 	checkTokensOutOfRange();
-
 	index++;
-
 	return array;
 }
 
 AbstractObject* Parser::parseObject() {
 	excpectToken(TokenType::BRACE_LEFT, tokens[index].type);
-	
 	index++;
-
 	checkTokensOutOfRange();
-
 	auto obj = new Object();
-
 	if (tokens[index].type == TokenType::BRACE_RIGHT) {
 		index++;
 		return obj;
 	}
-
 	while (index < tokens.size()) {
-		excpectToken(TokenType::STRING_, tokens[index].type);
-
+		excpectToken(TokenType::STRING, tokens[index].type);
 		auto key = unescapeQuotes(tokens[index].rawValue);
-
 		index++;
-
 		checkTokensOutOfRange();
-
 		excpectToken(TokenType::COLON, tokens[index].type);
-
 		index++;
-
 		auto value = parseUnknown();
-
 		obj->set(key, value);
-
 		checkTokensOutOfRange();
-
 		if (tokens[index].type == TokenType::BRACE_RIGHT) {
 			break;
 		}
-
 		excpectToken(TokenType::COMMA, tokens[index].type);
-
 		index++;
 	}
-
 	checkTokensOutOfRange();
-
 	index++;
-
 	return obj;
 }

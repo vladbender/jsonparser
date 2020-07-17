@@ -48,7 +48,7 @@ std::vector<Token> Tokenizer::tokenize() {
 				raw += json[index];
 				index++;
 			}
-			result.push_back({ TokenType::STRING_, raw });
+			result.push_back({ TokenType::STRING, raw });
 
 		} else if (json[index] == 't') {
 			index++;

@@ -5,7 +5,7 @@ enum TokenType {
 	BRACE_RIGHT, // }
 	BRACKET_LEFT, // [
 	BRACKET_RIGHT, // ]
-	STRING_, // "..."
+	STRING, // "..."
 	NULL_, // null
 	BOOLEAN, // true, false
 	COLON, // :
