@@ -15,7 +15,7 @@ namespace JSON {
 			message = "Expected: <" + expected + ">, but received: <" + received + ">";
 		}
 
-		const char* what() const {
+		const char* what() const noexcept {
 			return message.c_str();
 		}
 	};

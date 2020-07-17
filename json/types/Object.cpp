@@ -9,9 +9,8 @@ namespace JSON {
 		}
 	}
 
-	void Object::set(std::string& key, AbstractObject* obj) {
+	void Object::set(const std::string& key, AbstractObject* obj) {
 		auto has = values.find(key);
-
 		if (has == values.end()) {
 			// Нет другого элемента с таким ключом - добавляем
 			values[key] = obj;
@@ -23,9 +22,8 @@ namespace JSON {
 		}
 	}
 
-	AbstractObject* Object::operator[](std::string& key) {
+	AbstractObject* Object::operator[](const std::string& key) {
 		auto has = values.find(key);
-
 		if (has == values.end()) {
 			return nullptr;
 		} else {
@@ -35,19 +33,16 @@ namespace JSON {
 
 	std::string Object::toString() {
 		std::string result = "{";
-
 		int i = 0;
 		int last = values.size() - 1;
 		for (auto it = values.begin(); it != values.end(); it++, i++) {
 			result += " \"" + escapeQuotes(it->first) + "\": " + it->second->toString();
-
 			if (i != last) {
 				result += ",";
 			} else {
 				result += " ";
 			}
 		}
-
 		result += "}";
 		return result;
 	}

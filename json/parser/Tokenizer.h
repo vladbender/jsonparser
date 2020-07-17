@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <exception>
+#include <stdexcept>
 
 #include "Token.h"
 #include "TokenType.h"

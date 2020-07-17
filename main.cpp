@@ -85,7 +85,7 @@ void testExpectedString(Tester &tester) {
 		message = std::string(e.what());
 	}
 
-	tester.testEqual(message, std::string("Expected: <STRING_>, but received: <[>"));
+	tester.testEqual(message, std::string("Expected: <STRING>, but received: <[>"));
 }
 
 void testNotAllCharactersParsed(Tester &tester) {
