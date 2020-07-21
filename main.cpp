@@ -202,18 +202,18 @@ void testSpaceXLatestLaunch(Tester &tester) {
 	std::string raw = "{\"fairings\":{\"reused\":null,\"recovery_attempt\":true,\"recovered\":true,\"ships\":[\"5ea6ed2e080df4000697c908\",\"5ea6ed2e080df4000697c907\"]},\"links\":{\"patch\":{\"small\":null,\"large\":null},\"reddit\":{\"campaign\":\"https://www.reddit.com/r/spacex/comments/hkbhqo/anasisii_launch_campaign_thread\",\"launch\":\"https://www.reddit.com/r/spacex/comments/hu6sci/rspacex_anasisii_official_launch_discussion/\",\"media\":\"https://www.reddit.com/r/spacex/comments/hun4pv/rspacex_anasisii_media_thread_photographer_contest/\",\"recovery\":null},\"flickr\":{\"small\":[],\"original\":[]},\"presskit\":null,\"webcast\":\"https://youtu.be/TshvZlQ7le8\",\"youtube_id\":\"TshvZlQ7le8\",\"article\":\"https://spaceflightnow.com/2020/07/20/spacex-delivers-south-koreas-first-military-satellite-into-on-target-orbit/\",\"wikipedia\":null},\"static_fire_date_utc\":\"2020-07-11T17:58:00.000Z\",\"static_fire_date_unix\":1594490280,\"tbd\":false,\"net\":false,\"window\":null,\"rocket\":\"5e9d0d95eda69973a809d1ec\",\"success\":true,\"failures\":[],\"details\":\"SpaceX will launch ANASIS-II, a South Korean geostationary military communication satellite from LC-39A, Kennedy Space Center. It will be South Korea's first dedicated military communications satellite. Falcon 9 will deliver the satellite to a geostationary transfer orbit. The booster is expected to land downrange on an ASDS.\",\"crew\":[],\"ships\":[\"5ea6ed2e080df4000697c908\",\"5ea6ed2e080df4000697c907\",\"5ea6ed2f080df4000697c90b\"],\"capsules\":[],\"payloads\":[\"5eb0e4d2b6c3bb0006eeb25b\"],\"launchpad\":\"5e9e4501f509094ba4566f84\",\"auto_update\":true,\"flight_number\":98,\"name\":\"ANASIS-II\",\"date_utc\":\"2020-07-20T21:30:00.000Z\",\"date_unix\":1595280600,\"date_local\":\"2020-07-20T17:30:00-04:00\",\"date_precision\":\"hour\",\"upcoming\":false,\"cores\":[{\"core\":\"5e9e28a7f3591817f23b2663\",\"flight\":2,\"gridfins\":true,\"legs\":true,\"reused\":true,\"landing_attempt\":true,\"landing_success\":true,\"landing_type\":\"ASDS\",\"landpad\":\"5e9e3033383ecbb9e534e7cc\"}],\"id\":\"5eb87d50ffd86e000604b394\"}";
 
 	try {
-		auto obj = (JSON::Object*)JSON::parse(raw);
+		auto obj = *(JSON::Object*)JSON::parse(raw);
 
-		auto details = (JSON::String*)(*obj)[std::string("details")];
-		std::cout << "details: " << details->getValue() << std::endl;
+		auto details = *(JSON::String*)obj[std::string("details")];
+		std::cout << "details: " << details.getValue() << std::endl;
 
-		auto date_utc = (JSON::String*)(*obj)[std::string("date_utc")];
-		std::cout << "date_utc: " << date_utc->getValue() << std::endl;
+		auto date_utc = *(JSON::String*)obj[std::string("date_utc")];
+		std::cout << "date_utc: " << date_utc.getValue() << std::endl;
 
-		auto links = (JSON::Object*)(*obj)[std::string("links")];
-		auto reddit = (JSON::Object*)(*links)[std::string("reddit")];
-		auto launch = (JSON::String*)(*reddit)[std::string("launch")];
-		std::cout << "launch: " << launch->getValue() << std::endl;
+		auto links = *(JSON::Object*)obj[std::string("links")];
+		auto reddit = *(JSON::Object*)links[std::string("reddit")];
+		auto launch = *(JSON::String*)reddit[std::string("launch")];
+		std::cout << "launch: " << launch.getValue() << std::endl;
 
 		tester.testEqual(1, 1);
 	} catch (std::exception &e) {
