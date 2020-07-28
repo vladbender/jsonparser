@@ -221,6 +221,23 @@ void testSpaceXLatestLaunch(Tester &tester) {
 	}
 }
 
+void testArraySize(Tester& tester) {
+	tester.name("Test array size");
+
+	try {
+		auto arr1 = *(JSON::Array*)JSON::parse("[1,2,3,4]");
+		tester.testEqual(arr1.size(), size_t(4));
+
+		auto arr2 = *(JSON::Array*)JSON::parse("[]");
+		tester.testEqual(arr2.size(), size_t(0));
+
+		auto arr3 = *(JSON::Array*)JSON::parse("[\"one\", null, true, 123.456, {}, {}, {}]");
+		tester.testEqual(arr3.size(), size_t(7));
+	} catch (std::exception &e) {
+		tester.testEqual(std::string(e.what()), std::string());
+	}
+}
+
 int main() {
 	Tester tester;
 
@@ -235,6 +252,7 @@ int main() {
 	testUndefined(tester);
 	testParseObject(tester);
 	testSpaceXLatestLaunch(tester);
+	testArraySize(tester);
 
 	tester.summary();
 

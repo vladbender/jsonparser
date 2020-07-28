@@ -11,11 +11,11 @@ namespace JSON {
 			type = Type::STRING;
 		}
 
-		std::string getValue() {
+		std::string getValue() const{
 			return value;
 		}
 
-		std::string toString();
+		std::string toString() const;
 
 	private:
 		std::string value;

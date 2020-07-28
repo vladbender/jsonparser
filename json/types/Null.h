@@ -11,7 +11,7 @@ namespace JSON {
 			type = Type::NULL_;
 		}
 
-		std::string toString() {
+		std::string toString() const {
 			return "null";
 		}
 	};

@@ -11,11 +11,11 @@ namespace JSON {
 			type = Type::NUMBER;
 		}
 
-		double getValue() {
+		double getValue() const {
 			return value;
 		}
 
-		std::string toString();
+		std::string toString() const;
 
 	private:
 		double value;

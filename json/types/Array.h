@@ -20,7 +20,11 @@ namespace JSON {
 			values.push_back(obj);
 		}
 
-		std::string toString();
+		std::string toString() const;
+
+		size_t size() const {
+			return this->values.size();
+		}
 
 	private:
 		// Может хранить ссылки?

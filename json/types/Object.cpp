@@ -31,7 +31,7 @@ namespace JSON {
 		}
 	}
 
-	std::string Object::toString() {
+	std::string Object::toString() const {
 		std::string result = "{";
 		int i = 0;
 		int last = values.size() - 1;

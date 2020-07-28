@@ -11,11 +11,11 @@ namespace JSON {
 			type = Type::NONE;
 		}
 
-		Type getType() {
+		Type getType() const {
 			return type;
 		}
 
-		virtual std::string toString() = 0;
+		virtual std::string toString() const = 0;
 
 	protected:
 		Type type;

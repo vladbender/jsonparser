@@ -11,11 +11,11 @@ namespace JSON {
 			type = Type::BOOLEAN;
 		}
 
-		bool getValue() {
+		bool getValue() const {
 			return value;
 		}
 
-		std::string toString() {
+		std::string toString() const {
 			return value ? "true" : "false";
 		}
 

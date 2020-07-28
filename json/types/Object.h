@@ -18,7 +18,7 @@ namespace JSON {
 
 		void set(const std::string&, AbstractObject*);
 
-		std::string toString();
+		std::string toString() const;
 
 	private:
 		std::unordered_map<std::string, AbstractObject*> values;

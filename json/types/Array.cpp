@@ -13,7 +13,7 @@ namespace JSON {
 		return values.at(pos);
 	}
 
-	std::string Array::toString() {
+	std::string Array::toString() const {
 		std::string result = "[";
 		for (size_t i = 0; i < values.size(); i++) {
 			result += " " + values[i]->toString();
