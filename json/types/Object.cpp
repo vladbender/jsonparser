@@ -46,4 +46,39 @@ namespace JSON {
 		result += "}";
 		return result;
 	}
+
+	Number* Object::getNumber(const std::string& key) {
+		auto value = (*this)[key];
+		if (value == nullptr) return nullptr;
+		expectType(value->getType(), Type::NUMBER);
+		return (Number*)value;
+	};
+
+	String* Object::getString(const std::string& key) {
+		auto value = (*this)[key];
+		if (value == nullptr) return nullptr;
+		expectType(value->getType(), Type::STRING);
+		return (String*)value;
+	};
+
+	Boolean* Object::getBoolean(const std::string& key) {
+		auto value = (*this)[key];
+		if (value == nullptr) return nullptr;
+		expectType(value->getType(), Type::BOOLEAN);
+		return (Boolean*)value;
+	};
+
+	Array* Object::getArray(const std::string& key) {
+		auto value = (*this)[key];
+		if (value == nullptr) return nullptr;
+		expectType(value->getType(), Type::ARRAY);
+		return (Array*)value;
+	};
+
+	Object* Object::getObject(const std::string& key) {
+		auto value = (*this)[key];
+		if (value == nullptr) return nullptr;
+		expectType(value->getType(), Type::OBJECT);
+		return (Object*)value;
+	};
 }

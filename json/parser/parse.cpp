@@ -12,15 +12,6 @@ namespace JSON {
 		return parser.parse();
 	}
 
-	void expectType (const Type& expected, const Type& received) {
-		if (expected != received) {
-			throw ExpectedException(
-				fromTypeToString(expected),
-				fromTypeToString(received)
-			);
-		}
-	}
-
 	String* parseString(const std::string& json) {
 		auto absObj = parse(json);
 		expectType(absObj->getType(), Type::STRING);

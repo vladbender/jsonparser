@@ -5,3 +5,4 @@
 #include "unescapeQuotes.h"
 #include "fromTokenTypeToString.h"
 #include "fromTypeToString.h"
+#include "expectType.h"
