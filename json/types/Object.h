@@ -2,6 +2,7 @@
 
 #include <string>
 #include <unordered_map>
+#include <utility>
 
 #include "AbstractObject.h"
 #include "Number.h"
@@ -28,6 +29,29 @@ namespace JSON {
 		Boolean* getBoolean(const std::string& key);
 		Array* getArray(const std::string& key);
 		Object* getObject(const std::string& key);
+
+		class iterator {
+			public:
+				iterator operator++();
+				iterator operator++(int);
+				// какие типы должны быть?
+				std::pair<std::string, AbstractObject*> operator*();
+				std::pair<std::string, AbstractObject*> operator->();
+				bool operator==(const iterator& other);
+				bool operator!=(const iterator& other);
+				iterator(const std::unordered_map<std::string, AbstractObject*>& values, bool isBegin);
+				// конструктор копирования???
+			private:
+				std::unordered_map<std::string, AbstractObject*>::iterator it;
+		};
+
+		iterator begin() {
+			return iterator(values, true);
+		}
+
+		iterator end() {
+			return iterator(values, false);
+		}
 	private:
 		std::unordered_map<std::string, AbstractObject*> values;
 	};

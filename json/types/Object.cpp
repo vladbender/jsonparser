@@ -81,4 +81,43 @@ namespace JSON {
 		expectType(value->getType(), Type::OBJECT);
 		return (Object*)value;
 	};
+
+	Object::iterator::iterator(
+		const std::unordered_map<std::string, AbstractObject*>& values,
+		bool isBegin
+	) {
+		if (isBegin) {
+			// есть же перегрузка хм
+			it = values.begin();
+		} else {
+			it = values.end();
+		}
+	}
+
+	Object::iterator Object::iterator::operator++() {
+		Object::iterator old = *this;
+		++it;
+		return old;
+	}
+
+	Object::iterator Object::iterator::operator++() {
+		it++;
+		return *this;
+	}
+
+	std::pair<std::string, AbstractObject*> Object::iterator::operator*() {
+		return *it;
+	};
+
+	std::pair<std::string, AbstractObject*> Object::iterator::operator->() {
+		return *it;
+	};
+
+	bool Object::iterator::operator==(const Object::iterator& other) {
+		return it == other.it;
+	};
+
+	bool Object::iterator::operator!=(const Object::iterator& other) {
+		return !(*this == other);
+	};
 }
