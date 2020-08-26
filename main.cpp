@@ -131,12 +131,24 @@ int main() {
 	tester.test("Object iteration", [&]() {
 		auto obj = JSON::parseObject("{\"one\":1,\"two\":2}");
 		auto it = obj->begin();
-		tester.isEqual<std::string>((*it).first, "one");
-		tester.isEqual<double>(((JSON::Number*)(*it).second)->getValue(), 1);
-		it++;
-		tester.isEqual<std::string>((*it).first, "two");
-		tester.isEqual<double>(((JSON::Number*)(*it).second)->getValue(), 2);
-		it++;
+		auto end = obj->end();
+		bool keysWas[2] = { false, false };
+		
+		while (it != end) {
+			if ((*it).first == "one") {
+				tester.isEqual<double>(((JSON::Number*)(*it).second)->getValue(), 1);
+				keysWas[0] = true;
+			} else if ((*it).first == "two") {
+				tester.isEqual<double>(((JSON::Number*)(*it).second)->getValue(), 2);
+				keysWas[1] = true;
+			} else {
+				tester.isEqual<std::string>((*it).first, "one or two");
+			}
+			it++;
+		}
+		if (!keysWas[0] || !keysWas[1]) {
+			tester.isEqual<std::string>("", "no founded one or two key");
+		}
 		delete obj;
 	});
 
