@@ -24,7 +24,13 @@ private:
 	bool alreadyRunned;
 
 	void skipWhiteSpaces() {
-		while (json[index] == ' ' || json[index] == '\n') {
+		while (
+			index < json.size() &&
+			(json[index] == ' ' ||
+			json[index] == '\n' ||
+			json[index] == '\r' ||
+			json[index] == '\t')
+		) {
 			index++;
 		}
 	}

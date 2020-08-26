@@ -182,6 +182,17 @@ int main() {
 			}
 		}
 		tester.isEqual(keys, expectedKeys);
+		delete obj;
+	});
+
+	tester.test("All whitespaces from standard", [&]() {
+		auto arr = JSON::parseArray("[   \"first\",\t\t\t\t\"two\",\n\n\n\n\"three\",\r\r\r\r\"four\"\n\r\t]\n");
+		tester.isEqual<size_t>(arr->size(), 4);
+		tester.isEqual<std::string>(arr->stringAt(0)->getValue(), "first");
+		tester.isEqual<std::string>(arr->stringAt(1)->getValue(), "two");
+		tester.isEqual<std::string>(arr->stringAt(2)->getValue(), "three");
+		tester.isEqual<std::string>(arr->stringAt(3)->getValue(), "four");
+		delete arr;
 	});
 
 	tester.summary();

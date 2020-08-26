@@ -9,9 +9,9 @@ std::vector<Token> Tokenizer::tokenize() {
 
 	std::vector<Token> result;
 
+	skipWhiteSpaces();
+
 	while (index < json.size()) {
-		
-		skipWhiteSpaces();
 
 		if (json[index] == '{') {
 			result.push_back({ TokenType::BRACE_LEFT, "{" });
@@ -81,6 +81,8 @@ std::vector<Token> Tokenizer::tokenize() {
 		} else {
 			throw JSON::ExpectedException("One of char: []{}:,\" or true/false/null", std::string(1, json[index]));
 		}
+
+		skipWhiteSpaces();
 	}
 
 	return result;
