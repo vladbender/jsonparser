@@ -128,7 +128,7 @@ int main() {
 		delete arr3;
 	});
 
-	tester.test("Object iteration", [&]() {
+	tester.test("Object iteration 1", [&]() {
 		auto obj = JSON::parseObject("{\"one\":1,\"two\":2}");
 		auto it = obj->begin();
 		auto end = obj->end();
@@ -150,6 +150,20 @@ int main() {
 			tester.isEqual<std::string>("", "no founded one or two key");
 		}
 		delete obj;
+	});
+
+	tester.test("Object iteration 2", [&]() {
+		auto obj = JSON::parseObject("{\"first\":[1,3,4],\"second\":null,\"third\":1235.4,\"four\":{}}");
+		int expectedKeys = 4;
+		int keys = 0;
+		
+		// todo проверить все значения
+		for (auto it = obj->begin(); it != obj->end(); it++) {
+			// std::cout << (*it).first << std::endl;
+			keys++;
+		}
+
+		tester.isEqual(keys, expectedKeys);
 	});
 
 	tester.summary();
