@@ -131,12 +131,12 @@ int main() {
 	tester.test("Object iteration", [&]() {
 		auto obj = JSON::parseObject("{\"one\":1,\"two\":2}");
 		auto it = obj->begin();
-		auto end = obj->end();
 		tester.isEqual<std::string>((*it).first, "one");
+		tester.isEqual<double>(((JSON::Number*)(*it).second)->getValue(), 1);
 		it++;
 		tester.isEqual<std::string>((*it).first, "two");
+		tester.isEqual<double>(((JSON::Number*)(*it).second)->getValue(), 2);
 		it++;
-		// tester.isEqual(it, end);
 		delete obj;
 	});
 

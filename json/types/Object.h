@@ -40,6 +40,7 @@ namespace JSON {
 				bool operator!=(const iterator& other);
 				iterator(const std::unordered_map<std::string, AbstractObject*>& values, bool isBegin);
 				// конструктор копирования???
+				iterator(const iterator& other) { this->it = other.it; }
 			private:
 				std::unordered_map<std::string, AbstractObject*>::const_iterator it;
 		};
