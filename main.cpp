@@ -128,6 +128,18 @@ int main() {
 		delete arr3;
 	});
 
+	tester.test("Object iteration", [&]() {
+		auto obj = JSON::parseObject("{\"one\":1,\"two\":2}");
+		auto it = obj->begin();
+		auto end = obj->end();
+		tester.isEqual<std::string>((*it).first, "one");
+		it++;
+		tester.isEqual<std::string>((*it).first, "two");
+		it++;
+		// tester.isEqual(it, end);
+		delete obj;
+	});
+
 	tester.summary();
 
 	return 0;

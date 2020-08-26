@@ -87,7 +87,6 @@ namespace JSON {
 		bool isBegin
 	) {
 		if (isBegin) {
-			// есть же перегрузка хм
 			it = values.begin();
 		} else {
 			it = values.end();
@@ -100,16 +99,12 @@ namespace JSON {
 		return old;
 	}
 
-	Object::iterator Object::iterator::operator++() {
+	Object::iterator Object::iterator::operator++(int val) {
 		it++;
 		return *this;
 	}
 
 	std::pair<std::string, AbstractObject*> Object::iterator::operator*() {
-		return *it;
-	};
-
-	std::pair<std::string, AbstractObject*> Object::iterator::operator->() {
 		return *it;
 	};
 

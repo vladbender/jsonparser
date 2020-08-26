@@ -36,13 +36,12 @@ namespace JSON {
 				iterator operator++(int);
 				// какие типы должны быть?
 				std::pair<std::string, AbstractObject*> operator*();
-				std::pair<std::string, AbstractObject*> operator->();
 				bool operator==(const iterator& other);
 				bool operator!=(const iterator& other);
 				iterator(const std::unordered_map<std::string, AbstractObject*>& values, bool isBegin);
 				// конструктор копирования???
 			private:
-				std::unordered_map<std::string, AbstractObject*>::iterator it;
+				std::unordered_map<std::string, AbstractObject*>::const_iterator it;
 		};
 
 		iterator begin() {
