@@ -85,7 +85,7 @@ void Tester::testWithException(
 }
 
 template <typename T>
-void Tester::isEqual(T expected, T received) {
+void Tester::isEqual(T received, T expected) {
 	if (expected != received) {
 		std::ostringstream out;
 		out << "\n\tExpected: <" << expected << ">\n\tSHOULD BE EQUAL\n\tReceived: <" << received << ">";
@@ -94,7 +94,7 @@ void Tester::isEqual(T expected, T received) {
 }
 
 template <typename T>
-void Tester::isNotEqual(T expected, T received) {
+void Tester::isNotEqual(T received, T expected) {
 	if (expected == received) {
 		std::ostringstream out;
 		out << "\n\tExpected: <" << expected << ">\n\tSHOULDN'T BE EQUAL to\n\treceived: <" << received << ">";
