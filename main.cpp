@@ -1,4 +1,5 @@
 #include <iostream>
+#include <exception>
 #include "json/json.h"
 #include "Tester.h"
 
@@ -132,37 +133,54 @@ int main() {
 		auto obj = JSON::parseObject("{\"one\":1,\"two\":2}");
 		auto it = obj->begin();
 		auto end = obj->end();
-		bool keysWas[2] = { false, false };
+		int expectedKeys = 0x3;
+		int keys = 0;
 		
 		while (it != end) {
 			if ((*it).first == "one") {
 				tester.isEqual<double>(((JSON::Number*)(*it).second)->getValue(), 1);
-				keysWas[0] = true;
+				keys |= 1;
 			} else if ((*it).first == "two") {
 				tester.isEqual<double>(((JSON::Number*)(*it).second)->getValue(), 2);
-				keysWas[1] = true;
+				keys |= 2;
 			} else {
-				tester.isEqual<std::string>((*it).first, "one or two");
+				throw std::exception("expected key \"one\" or \"two\"");
 			}
 			it++;
 		}
-		if (!keysWas[0] || !keysWas[1]) {
-			tester.isEqual<std::string>("", "no founded one or two key");
-		}
+		tester.isEqual(keys, expectedKeys);
 		delete obj;
 	});
 
 	tester.test("Object iteration 2", [&]() {
 		auto obj = JSON::parseObject("{\"first\":[1,3,4],\"second\":null,\"third\":1235.4,\"four\":{}}");
-		int expectedKeys = 4;
+		int expectedKeys = 0xF;
 		int keys = 0;
-		
-		// todo проверить все значения
-		for (auto it = obj->begin(); it != obj->end(); it++) {
-			// std::cout << (*it).first << std::endl;
-			keys++;
-		}
 
+		for (auto it = obj->begin(); it != obj->end(); it++) {
+			auto key = (*it).first;
+			if (key == "first") {
+				auto value = (JSON::Array*)(*it).second;
+				tester.isEqual<size_t>(value->size(), 3);
+				tester.isEqual<double>(value->numberAt(0)->getValue(), 1);
+				tester.isEqual<double>(value->numberAt(1)->getValue(), 3);
+				tester.isEqual<double>(value->numberAt(2)->getValue(), 4);
+				keys |= 1 << (1 - 1);
+			} else if (key == "second") {
+				tester.isEqual((*it).second->getType(), JSON::Type::NULL_);
+				keys |= 1 << (2 - 1);
+			} else if (key == "third") {
+				auto value = (JSON::Number*)(*it).second;
+				tester.isEqual<double>(value->getValue(), 1235.4);
+				keys |= 1 << (3 - 1);
+			} else if (key == "four") {
+				tester.isEqual((*it).second->getType(), JSON::Type::OBJECT);
+				keys |= 1 << (4 - 1);
+			} else {
+				std::string message = "unexpected key:<" + key + ">";
+				throw std::exception(message.c_str());
+			}
+		}
 		tester.isEqual(keys, expectedKeys);
 	});
 
