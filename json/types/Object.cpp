@@ -84,9 +84,9 @@ namespace JSON {
 
 	Object::iterator::iterator(
 		const std::unordered_map<std::string, AbstractObject*>& values,
-		bool isBegin
+		bool fromBegin
 	) {
-		if (isBegin) {
+		if (fromBegin) {
 			it = values.begin();
 		} else {
 			it = values.end();
