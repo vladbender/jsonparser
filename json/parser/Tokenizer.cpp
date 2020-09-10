@@ -65,21 +65,74 @@ std::vector<Token> Tokenizer::tokenize() {
 			expectChars({ 'u', 'l', 'l' });
 			result.push_back({ TokenType::NULL_, "null" });
 
-		} else if ('0' <= json[index] && json[index] <= '9') {
+		} else if ('0' <= json[index] && json[index] <= '9' || json[index] == '-') {
 			std::string raw = "";
-			// TODO сначала считаем числом любой набор из цифр и точек
-			// В дальнейшем можно сразу его распарсить, чтобы прервать парсинг, если оно невалидно
-			while (
-				index < json.size() &&
-				(('0' <= json[index] && json[index] <= '9') || json[index] == '.')
-			) {
-				raw += json[index];
-				index++;
+			/**
+			 * Валидным числом в JSON считается строка, состящая из символов:
+			 * 1) - (опционален)
+			 * 2) 0 или ( (1-9) + любое количество цифр (0-9) ) (число не может начинаться с нуля)
+			 * 3) . (опционально) + любое количество цифр (0-9) (если точка есть то цифры обязательны)
+			 * 4) Опциональный пункт E или e, затем обязательно + или -, затем любое количество цифр 0-9
+			 *    (если есть в начале Е или е, то далее обязательны +- и хотя бы одна цифра)
+			 *    пункт может существовать независимо от пункта 3.
+			 */
+
+			// 1) - (опционален)
+			if (json[index] == '-') {
+				raw += json[index++];
+			}
+			checkJSONOutOfRange();
+			// 2) 0 или (1-9) + любое количество цифр (0-9) (число не может начинаться с нуля)
+			if (json[index] == '0') {
+				raw += json[index++];
+			} else if ('1' <= json[index] && json[index] <= '9') {
+				while (index < json.size() && '0' <= json[index] && json[index] <= '9') {
+					raw += json[index++];
+				}	
+			} else {
+				throw JSON::ExpectedException("One of char: 0-9", std::string(1, json[index]));
+			}
+			if (index >= json.size()) {
+				result.push_back({ TokenType::NUMBER, raw });
+				continue;
+			}
+			// 3) . (опционально) + любое количество цифр (0-9) (если точка есть то цифры обязательны)
+			if (json[index] == '.') {
+				raw += json[index++];
+				checkJSONOutOfRange();
+				if (!('0' <= json[index] && json[index] <= '9')) {
+					throw JSON::ExpectedException("One of char: 0-9", std::string(1, json[index]));
+				}
+				while (index < json.size() && '0' <= json[index] && json[index] <= '9') {
+					raw += json[index++];
+				}
+			}
+			if (index >= json.size()) {
+				result.push_back({ TokenType::NUMBER, raw });
+				continue;
+			}
+			// 4) Опциональный пункт E или e, затем обязательно + или -, затем любое количество цифр 0-9
+			//    (если есть в начале Е или е, то далее обязательны +- и хотя бы одна цифра)
+			//    пункт может существовать независимо от пункта 3.
+			if (json[index] == 'E' || json[index] == 'e') {
+				raw += json[index++];
+				checkJSONOutOfRange();
+				if (!(json[index] == '+' || json[index] == '-')) {
+					throw JSON::ExpectedException("One of char: +-", std::string(1, json[index]));
+				}
+				raw += json[index++];
+				checkJSONOutOfRange();
+				if (!('0' <= json[index] && json[index] <= '9')) {
+					throw JSON::ExpectedException("One of char: 0-9", std::string(1, json[index]));
+				}
+				while (index < json.size() && '0' <= json[index] && json[index] <= '9') {
+					raw += json[index++];
+				}
 			}
 			result.push_back({ TokenType::NUMBER, raw });
 
 		} else {
-			throw JSON::ExpectedException("One of char: []{}:,\" or true/false/null", std::string(1, json[index]));
+			throw JSON::ExpectedException("One of char: []{}:+-,\" digits or true/false/null", std::string(1, json[index]));
 		}
 
 		skipWhiteSpaces();

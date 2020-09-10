@@ -45,7 +45,6 @@ AbstractObject* Parser::parseUnknown() {
 	}
 
 	case TokenType::NUMBER: {
-		// TODO отловить эксепшн и кинуть свой
 		auto d = std::stod(tokens[index].rawValue);
 		auto num = new Number(d);
 		index++;

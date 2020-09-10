@@ -76,7 +76,7 @@ int main() {
 
 	tester.testWithException(
 		"Expected one of",
-		"Expected: <One of char: []{}:,\" or true/false/null>, but received: <q>",
+		"Expected: <One of char: []{}:+-,\" digits or true/false/null>, but received: <q>",
 		[&]() {
 			auto obj = JSON::parse("{\"key\":qqq}");
 			std::cout << obj->getType() << std::endl;
@@ -97,7 +97,7 @@ int main() {
 
 	tester.testWithException(
 		"undefined",
-		"Expected: <One of char: []{}:,\" or true/false/null>, but received: <u>",
+		"Expected: <One of char: []{}:+-,\" digits or true/false/null>, but received: <u>",
 		[&]() {
 			auto obj = JSON::parse("undefined");
 			std::cout << obj->getType() << std::endl;
@@ -195,6 +195,83 @@ int main() {
 		tester.isEqual<std::string>(arr->stringAt(3)->getValue(), "four");
 		delete arr;
 	});
+
+	tester.test("Negative numbers", [&]() {
+		auto obj = JSON::parseObject("{ \"n\": -100 }");
+		auto n = obj->getNumber("n");
+		tester.isEqual(n->getValue(), -100.0);
+		delete obj;
+	});
+
+	tester.test("All numbers from standard", [&]() {
+		auto arr = JSON::parseArray("[0, -0, 123, 123.456, 1.23456E+2, 123456E-3]");
+		tester.isEqual(arr->numberAt(0)->getValue(), 0.0);
+		tester.isEqual(arr->numberAt(1)->getValue(), -0.0);
+		tester.isEqual(arr->numberAt(2)->getValue(), 123.0);
+		tester.isEqual(arr->numberAt(3)->getValue(), 123.456);
+		tester.isEqual(arr->numberAt(4)->getValue(), 123.456);
+		tester.isEqual(arr->numberAt(5)->getValue(), 123.456);
+		delete arr;
+	});
+
+	tester.testWithException(
+		"Wrong numbers for standard 1",
+		"Not all characters parsed",
+		[&]() {
+			auto num = JSON::parseNumber("0123");
+			tester.isEqual(num->getType(), JSON::Type::NUMBER);
+			delete num;
+		}
+	);
+
+	tester.testWithException(
+		"Wrong numbers for standard 2",
+		"Unexpected end of JSON",
+		[&]() {
+			auto num = JSON::parseNumber("123.");
+			tester.isEqual(num->getType(), JSON::Type::NUMBER);
+			delete num;
+		}
+	);
+	tester.testWithException(
+		"Wrong numbers for standard 3",
+		"Unexpected end of JSON",
+		[&]() {
+			auto num = JSON::parseNumber("123E");
+			tester.isEqual(num->getType(), JSON::Type::NUMBER);
+			delete num;
+		}
+	);
+	
+	tester.testWithException(
+		"Wrong numbers for standard 4",
+		"Unexpected end of JSON",
+		[&]() {
+			auto num = JSON::parseNumber("123E+");
+			tester.isEqual(num->getType(), JSON::Type::NUMBER);
+			delete num;
+		}
+	);
+	
+	tester.testWithException(
+		"Wrong numbers for standard 5",
+		"Unexpected end of JSON",
+		[&]() {
+			auto num = JSON::parseNumber("123.456e");
+			tester.isEqual(num->getType(), JSON::Type::NUMBER);
+			delete num;
+		}
+	);
+
+	tester.testWithException(
+		"Wrong numbers for standard 6",
+		"Expected: <One of char: 0-9>, but received: <,>",
+		[&]() {
+			auto obj = JSON::parseObject("[-,123]");
+			tester.isEqual(obj->getType(), JSON::Type::ARRAY);
+			delete obj;
+		}
+	);
 
 	tester.summary();
 
