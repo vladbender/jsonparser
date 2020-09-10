@@ -1,5 +1,6 @@
 #include <iostream>
 #include <exception>
+#include <stdexcept>
 #include "json/json.h"
 #include "Tester.h"
 
@@ -144,7 +145,7 @@ int main() {
 				tester.isEqual<double>(((JSON::Number*)(*it).second)->getValue(), 2);
 				keys |= 2;
 			} else {
-				throw std::exception("expected key \"one\" or \"two\"");
+				throw std::logic_error("expected key \"one\" or \"two\"");
 			}
 			it++;
 		}
@@ -178,7 +179,7 @@ int main() {
 				keys |= 1 << (4 - 1);
 			} else {
 				std::string message = "unexpected key:<" + key + ">";
-				throw std::exception(message.c_str());
+				throw std::logic_error(message.c_str());
 			}
 		}
 		tester.isEqual(keys, expectedKeys);
