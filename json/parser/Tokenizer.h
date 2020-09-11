@@ -51,4 +51,24 @@ private:
 			throw JSON::WrongLengthException("Unexpected end of JSON");
 		}
 	}
+
+	inline std::string extractString();
+
+	inline std::string extractNumber();
+	inline std::string extractOptionalMinus();
+	inline std::string extractIntegerPart();
+	inline std::string extractOptionalFractionalPart();
+	inline std::string extractOptionalExponentialPart();
+
+	void checkCurrentCharIsDigit() {
+		if (!('0' <= json[index] && json[index] <= '9')) {
+			throw JSON::ExpectedException("One of char: 0-9", std::string(1, json[index]));
+		}
+	}
+
+	void checkCurrentCharIsSign() {
+		if (!(json[index] == '+' || json[index] == '-')) {
+			throw JSON::ExpectedException("One of char: +-", std::string(1, json[index]));
+		}
+	}
 };
